@@ -78,7 +78,7 @@ class Mgr:
         if sys.argv[1] == 'submit':
             return None
 
-        subprocess.call(['jupyter', 'nbconvert', '--to', 'python', file_path], shell=False)
+        subprocess.call(['jupyter', 'nbconvert', '--to', 'python', str(file_path.resolve())], shell=False)
 
         ipts = self.get(index, release=True)
         if not ipts:
@@ -87,7 +87,7 @@ class Mgr:
         outputs = {}
         for quiz_dir_name, quiz in ipts.items():
             ipt = quiz['ipt']
-            p = subprocess.Popen(['python', py_path, 'submit', ipt], shell=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            p = subprocess.Popen(['python', str(py_path.resolve()), 'submit', ipt], shell=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             p.wait()
             stdout, stderr = p.communicate()
             if stderr or not stdout:
