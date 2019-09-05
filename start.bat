@@ -1,7 +1,8 @@
 @echo off
 
-echo ï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ÔµÈ¡ï¿½Ñ§Ï°ï¿½Ì³ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ø±Õ´Ë´ï¿½ï¿½Ú¡ï¿½
+echo ÏµÍ³¸üÐÂÖÐ...
 cd %~dp0\tutorial
 C:\git\bin\git.exe stash
 C:\git\bin\git.exe pull origin master
+echo ÏµÍ³Æô¶¯ÖÐ...
 C:\python3\Scripts\jupyter-lab
