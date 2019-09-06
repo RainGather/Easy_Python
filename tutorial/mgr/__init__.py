@@ -15,6 +15,7 @@ auth_path = pathlib.Path(__file__).parent / 'auth.json'
 class Mgr:
     def __init__(self):
         self.HOST = 'http://www.hzasteam.org:8097'
+        self.HOST = 'http://localhost:5000'
         self.AUTH_PATH = pathlib.Path(__file__).parent / 'auth.json'
         self.WECHAT = 'Assert_'
     
@@ -86,7 +87,7 @@ class Mgr:
             return False
         outputs = {}
         for quiz_dir_name, quiz in ipts.items():
-            ipt = quiz['ipt']
+            ipt = quiz['ipt'].strip()
             p = subprocess.Popen(['python', str(py_path.resolve()), 'submit', ipt], shell=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             p.wait()
             stdout, stderr = p.communicate()
@@ -98,7 +99,7 @@ class Mgr:
                     print('没有输出值！')
                 os.remove(py_path)
                 sys.exit(2)
-            stdout = stdout.decode('utf-8').strip()
+            stdout = stdout.decode('utf-8').strip().replace('\r', '')
             if stdout == quiz['ans']:
                 outputs[quiz_dir_name] = stdout
             else:
