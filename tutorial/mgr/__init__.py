@@ -15,7 +15,6 @@ auth_path = pathlib.Path(__file__).parent / 'auth.json'
 class Mgr:
     def __init__(self):
         self.HOST = 'http://www.hzasteam.org:8097'
-        self.HOST = 'http://localhost:5000'
         self.AUTH_PATH = pathlib.Path(__file__).parent / 'auth.json'
         self.WECHAT = 'Assert_'
     
