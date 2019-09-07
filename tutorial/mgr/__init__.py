@@ -146,6 +146,8 @@ class Mgr:
                 print('用户认证错误！')
             elif r.status_code == 403:
                 print(f'账户试用期已到，请联系微信{self.WECHAT}')
+            else:
+                print('网络错误！')
         else:
             if self.HOST == self.DEBUG_HOST:
                 print('DEBUG MODE')
@@ -159,6 +161,8 @@ class Mgr:
                 print('用户认证错误！')
             elif r.status_code == 403:
                 print(f'账户试用期已到，请联系微信{self.WECHAT}')
+            else:
+                print('网络错误！')
         return False
 
     def get_test_file_path_by_index(self, index):
