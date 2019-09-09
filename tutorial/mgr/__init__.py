@@ -45,7 +45,7 @@ class Mgr:
     def login(self):
         username = input('请输入用户名')
         pwd = input('请输入密码')
-        r = requests.post(f'{self.HOST}/login/{username}', json={'pwd': pwd})
+        r = requests.post(f'{self.HOST}/login/{username}', json={'pwd': pwd}, timeout=10)
         if r.ok:
             self.save_auth_info(username, pwd)
             print('登陆成功！')
@@ -58,7 +58,7 @@ class Mgr:
 
     def reg(self):
         username = input('请输入用户名')
-        r = requests.get(f'{self.HOST}/username_not_exists/{username}')
+        r = requests.get(f'{self.HOST}/username_not_exists/{username}', timeout=10)
         if r.ok:
             pwd = input('请输入密码')
             pwd_chk = input('请再次输入密码')
@@ -67,7 +67,7 @@ class Mgr:
                 pwd = input('请输入密码')
                 pwd_chk = input('请再次输入密码')
             mac = self.get_mac_address()
-            r = requests.post(f'{self.HOST}/reg/{username}', json={'pwd': pwd, 'mac': mac})
+            r = requests.post(f'{self.HOST}/reg/{username}', json={'pwd': pwd, 'mac': mac}, timeout=10)
             if r.ok:
                 self.save_auth_info(username, pwd)
                 print('注册成功！')
@@ -119,7 +119,7 @@ class Mgr:
             'outputs': outputs,
             'auth': self.get_auth()
         }
-        r = requests.post(f'{api}/{index}', json=data)
+        r = requests.post(f'{api}/{index}', json=data, timeout=10)
         if r.ok:
             print(r.text)
             os.remove(py_path)
@@ -139,7 +139,7 @@ class Mgr:
         api = f'{self.HOST}/getipt'
         if release:
             url = f'{api}/release/{index}'
-            r = requests.post(url, json={'auth': self.get_auth()})
+            r = requests.post(url, json={'auth': self.get_auth()}, timeout=10)
             if r.ok:
                 return r.json()
             elif r.status_code == 401:
@@ -152,7 +152,7 @@ class Mgr:
             if self.HOST == self.DEBUG_HOST:
                 print('DEBUG MODE')
             url = f'{api}/test/{index}'
-            r = requests.post(url, json={'auth': self.get_auth()})
+            r = requests.post(url, json={'auth': self.get_auth()}, timeout=10)
             if r.ok:
                 print('数据获取成功！本次测试值为：')
                 print(r.text)
