@@ -14,7 +14,7 @@ auth_path = pathlib.Path(__file__).parent / 'auth.json'
 
 class Mgr:
     def __init__(self):
-        self.HOST = 'http://www.hzasteam.org:8097'
+        self.HOST = 'http://ep.hzasteam.org'
         self.DEBUG_HOST = 'http://localhost:5000'
         self.AUTH_PATH = pathlib.Path(__file__).parent / 'auth.json'
         self.CONTACK = '微信：Assert_，QQ群：820510014(申请备注:EasyPython)'
