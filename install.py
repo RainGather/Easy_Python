@@ -22,7 +22,7 @@ def down(urls, path):
 
 
 pro_dir = pathlib.Path(__file__).parent.absolute()
-git_path = pro_dir / 'git.exe'
+git_path = pro_dir / 'git-install.exe'
 install_git_path = pro_dir / 'install-git.bat'
 chrome_path = pro_dir / 'chrome-install.exe'
 
@@ -45,12 +45,13 @@ chrome_download_urls = [
     'http://www.chromeliulanqi.com/ChromeStandaloneSetup.exe'
 ]
 
-
-if not git_path.exists():
-    print('下载Git工具...')
-    down(git_download_urls, git_path)
-    down(install_git_bat_download_urls, install_git_path)
-    time.sleep(2)
+git_installed = subprocess.check_output('git --version 2>NUL && echo yes || echo no', shell=True)
+if 'yes' not in git_installed.decode('utf-8'):
+    if not git_path.exists():
+        print('下载Git工具...')
+        down(git_download_urls, git_path)
+        down(install_git_bat_download_urls, install_git_path)
+        time.sleep(2)
     print('安装Git中...')
     subprocess.check_call(str(pro_dir / 'install-git.bat'), shell=True)
     time.sleep(2)
@@ -59,18 +60,18 @@ print('获取Easy Python项目中...')
 git_clone_dir = pro_dir.parent.absolute() / 'Easy_Python'
 if git_clone_dir.exists():
     try:
-        subprocess.check_call(f'cd {git_clone_dir}; C:\\git\\bin\\git.exe pull origin master', shell=False)
+        subprocess.check_call(f'cd {git_clone_dir}; git pull origin master', shell=False)
     except Exception as e:
         print(e)
 else:
     try:
-        subprocess.check_call(['C:\\git\\bin\\git.exe', 'clone', git_bare_urls[0], str(git_clone_dir.resolve())], shell=False)
+        subprocess.check_call(['git', 'clone', git_bare_urls[0], str(git_clone_dir.resolve())], shell=False)
     except Exception as e:
         print(e)
         # subprocess.check_call(['C:\\git\\bin\\git.exe', 'clone', git_bare_urls[1], git_clone_dir], shell=False)
 
-subprocess.check_call('C:\\git\\bin\\git.exe config --global user.name \"learner\"', shell=True)
-subprocess.check_call('C:\\git\\bin\\git.exe config --global user.email \"learner@none.com\"', shell=True)
+subprocess.check_call('git config --global user.name \"learner\"', shell=True)
+subprocess.check_call('git config --global user.email \"learner@none.com\"', shell=True)
 
 time.sleep(2)
 
@@ -95,4 +96,4 @@ if need_set_default:
     subprocess.call('%windir%\\system32\\control.exe /name Microsoft.DefaultPrograms /page pageDefaultProgram\\pageAdvancedSettings?pszAppName=google%20chrome', shell=True)
 print('安装完成，按【回车】将自动开启教程。之后可以双击桌面的【Easy Python教程】快捷方式来进入教程。')
 input()
-subprocess.call('C:\\python3\\Scripts\\jupyter-lab.exe', shell=True, cwd=str(git_clone_dir / 'tutorial'))
+subprocess.call('jupyter notebook', shell=True, cwd=str(git_clone_dir / 'tutorial'))
