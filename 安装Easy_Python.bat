@@ -36,6 +36,10 @@ python -m wget "http://static.hzasteam.org/Easy_Python_Client/install.py" -o ins
 if not exist install.py (
     python -m wget "https://raw.githubusercontent.com/RainGather/Easy_Python/master/install.py" -o install.py
 )
+python -m wget "http://static.hzasteam.org/Easy_Python_Client/start.py" -o start.py
+if not exist start.py (
+    python -m wget "https://raw.githubusercontent.com/RainGather/Easy_Python/master/start.py" -o start.py
+)
 python install.py
 
 echo 已完成全部安装过程，其中可能会因为网络等原因导致失败，如果还无法正常使用本项目，请重新运行本程序安装，按【任意键】退出。

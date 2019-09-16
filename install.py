@@ -5,10 +5,10 @@ import subprocess
 import pathlib
 import sys
 
+from .start import trust_notebook
+
 
 pro_dir = pathlib.Path(__file__).parent.absolute()
-sys.path.append(pro_dir)
-from start import trust_notebook
 git_path = pro_dir / 'git-install.exe'
 install_git_path = pro_dir / 'install-git.bat'
 chrome_path = pro_dir / 'chrome-install.exe'
