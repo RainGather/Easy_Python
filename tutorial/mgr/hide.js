@@ -2,6 +2,9 @@ function hide_input() {
     var cell_i = 0
     var divs = document.getElementsByTagName("div")
     for (var i = 0; i < divs.length; i++) {
+        if (divs[i].getAttribute("class") && divs[i].getAttribute("class").indexOf('cell text_cell') != -1 && divs[i].textContent.indexOf("# 注意！严重错误！") != -1 ) {
+            divs[i].style.display = 'none'
+        }
         if (divs[i].getAttribute("class") == 'input' && (divs[i].textContent.indexOf("from mgr import") != -1 || divs[i].textContent.indexOf("%%html") != -1 || divs[i].textContent.indexOf("%%js") != -1)) { 
             if (divs[i].textContent.indexOf("%%js") == -1) {
                 Jupyter.notebook.execute_cells([cell_i])
@@ -16,6 +19,7 @@ function hide_input() {
 
 function if_login_btn_show_cb(out_data){
     var output = out_data.content.text.trim()
+    $("#loading").hide()
     if (output != "False") {
         $("#username_show").text(output)
         $("#username_show").show()
@@ -53,5 +57,3 @@ function login_show() {
         login.style.display = "none"
     }
 }
-
-IPython.notebook.save_notebook()

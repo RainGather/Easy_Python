@@ -137,7 +137,6 @@ function sub() {
     var code = code.replace(/\"\"\"/g, "\\\"\\\"\\\"")
     var filename = get_filename()
     var sub_code = "import mgr\nmgr.substr(\"\"\"" + filename + "\"\"\", \"\"\"" + code + "\"\"\")"
-    IPython.notebook.save_notebook()
     var callback = {
         iopub: {
             output: output_,
@@ -160,5 +159,3 @@ function run_cell() {
     }
     return false
 }
-
-IPython.notebook.save_notebook()
