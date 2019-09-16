@@ -36,10 +36,12 @@ function output_(out_data) {
             result += out_data.content.traceback[error].replace(/\n/g, "<br>").trim() + "<br>"
         }
         var output = result.replace(/\[.*?m/g, '') + out_data.content.evalue.replace(/\n/g, "<br>")
-        document.getElementsByTagName("output")[0].innerHTML = output
+        $("#html_output").html(output)
+        // document.getElementsByTagName("output")[0].innerHTML = output
     } else {
         var output = out_data.content.text.replace(/\n/g, "<br>")
-        document.getElementsByTagName("output")[0].innerHTML = output
+        $("#html_output").html(output)
+        // document.getElementsByTagName("output")[0].innerHTML = output
     }
 }
 
@@ -51,6 +53,7 @@ function change_pwd() {
     $("#new_pwd").val("")
     $("#chk_new_pwd").val("")
     if (chk_new_pwd != new_pwd) {
+        $("#html_output").html("密码不一致！")
         requirejs(['mdui'], function(mdui) {
             mdui.alert("密码不一致！")
         })
@@ -70,6 +73,7 @@ function reg() {
     var pwd = $("#reg_pwd").val()
     var chk_pwd = $("#reg_chk_pwd").val()
     if (chk_pwd != pwd) {
+        $("#html_output").html("密码不一致！")
         requirejs(['mdui'], function(mdui) {
             mdui.alert("密码不一致！")
         })
@@ -91,10 +95,11 @@ function notice(out_data) {
             result += out_data.content.traceback[error].replace(/\n/g, "<br>").trim() + "<br>"
         }
         var output = result.replace(/\[.*?m/g, '') + out_data.content.evalue.replace(/\n/g, "<br>")
-        $("#output").html(output)
+        $("#html_output").html(output)
     } else {
         var output = out_data.content.text//.replace(/\n/g, "<br>")
         // alert(output)
+        $("#html_output").html(output)
         requirejs(['mdui'], function(mdui) {
             mdui.alert(output)
         })
