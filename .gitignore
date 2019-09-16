@@ -106,4 +106,4 @@ venv.bak/
 *.mp4
 .DS_Store
 **/*.db
-**/auth.json
+**/*.json
