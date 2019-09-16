@@ -5,25 +5,10 @@ import subprocess
 import pathlib
 import sys
 
-from start import trust_notebook
-
-
-def down(urls, path):
-    if path.exists():
-        os.remove(path)
-    for url in urls:
-        try:
-            print('尝试下载： {}'.format(url))
-            wget.download(url, out=str(path))
-            return True
-        except Exception as e:
-            print(e)
-    print('网络错误，下载失败！请检查网络后重新运行本程序。')
-    sys.exit(2)
-    return False
-
 
 pro_dir = pathlib.Path(__file__).parent.absolute()
+sys.path.append(pro_dir)
+from start import trust_notebook
 git_path = pro_dir / 'git-install.exe'
 install_git_path = pro_dir / 'install-git.bat'
 chrome_path = pro_dir / 'chrome-install.exe'
@@ -46,6 +31,21 @@ git_bare_urls = [
 chrome_download_urls = [
     'http://www.chromeliulanqi.com/ChromeStandaloneSetup.exe'
 ]
+
+
+def down(urls, path):
+    if path.exists():
+        os.remove(path)
+    for url in urls:
+        try:
+            print('尝试下载： {}'.format(url))
+            wget.download(url, out=str(path))
+            return True
+        except Exception as e:
+            print(e)
+    print('网络错误，下载失败！请检查网络后重新运行本程序。')
+    sys.exit(2)
+    return False
 
 git_installed = subprocess.check_output('(git --version 2>NUL || C:\\Git\\bin\\git.exe --version) && echo yes || echo no', shell=True)
 if 'yes' not in git_installed.decode('utf-8'):
