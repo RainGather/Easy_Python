@@ -60,18 +60,21 @@ print('获取Easy Python项目中...')
 git_clone_dir = pro_dir.parent.absolute() / 'Easy_Python'
 if git_clone_dir.exists():
     try:
-        subprocess.check_call(f'cd {git_clone_dir}; git pull origin master', shell=False)
+        subprocess.check_call(f'cd {git_clone_dir}; git pull origin master 2>NUL || C:\\Git\\bin\\git.exe pull origin master', shell=False)
     except Exception as e:
         print(e)
 else:
     try:
         subprocess.check_call(['git', 'clone', git_bare_urls[0], str(git_clone_dir.resolve())], shell=False)
     except Exception as e:
-        print(e)
+        try:
+            subprocess.check_call(['C:\\Git\\bin\\git.exe', 'clone', git_bare_urls[0], str(git_clone_dir.resolve())], shell=False)
+        except Exception as e:
+            print(e)
         # subprocess.check_call(['C:\\git\\bin\\git.exe', 'clone', git_bare_urls[1], git_clone_dir], shell=False)
 
-subprocess.check_call('git config --global user.name \"learner\"', shell=True)
-subprocess.check_call('git config --global user.email \"learner@none.com\"', shell=True)
+subprocess.check_call('git config --global user.name \"learner\" 2>NUL || C:\\Git\\bin\\git.exe config --global user.name \"learner\"', shell=True)
+subprocess.check_call('git config --global user.email \"learner@none.com\" 2>NUL || C:\\Git\\bin\\git.exe config --global user.email \"learner@none.com\"', shell=True)
 
 time.sleep(2)
 
