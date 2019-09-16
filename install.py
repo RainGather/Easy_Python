@@ -45,8 +45,9 @@ chrome_download_urls = [
     'http://www.chromeliulanqi.com/ChromeStandaloneSetup.exe'
 ]
 
-git_installed = subprocess.check_output('git --version 2>NUL && echo yes || echo no', shell=True)
+git_installed = subprocess.check_output('(git --version 2>NUL || C:\\Git\\bin\\git.exe --version) && echo yes || echo no', shell=True)
 if 'yes' not in git_installed.decode('utf-8'):
+    print('未检测到Git工具，尝试自动安装中...')
     if not git_path.exists():
         print('下载Git工具...')
         down(git_download_urls, git_path)
