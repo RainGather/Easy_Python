@@ -5,7 +5,7 @@ import subprocess
 import pathlib
 import sys
 
-from .start import trust_notebook
+from start import trust_notebook
 
 
 def down(urls, path):
