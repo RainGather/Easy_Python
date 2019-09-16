@@ -5,6 +5,8 @@ import subprocess
 import pathlib
 import sys
 
+from .start import trust_notebook
+
 
 def down(urls, path):
     if path.exists():
@@ -56,15 +58,18 @@ if 'yes' not in git_installed.decode('utf-8'):
     print('安装Git中...')
     subprocess.check_call(str(pro_dir / 'install-git.bat'), shell=True)
     time.sleep(2)
+    subprocess.check_call('git config --global user.name \"learner\" 2>NUL || C:\\Git\\bin\\git.exe config --global user.name \"learner\"', shell=True)
+    subprocess.check_call('git config --global user.email \"learner@none.com\" 2>NUL || C:\\Git\\bin\\git.exe config --global user.email \"learner@none.com\"', shell=True)
 
-print('获取Easy Python项目中...')
 git_clone_dir = pro_dir.parent.absolute() / 'Easy_Python'
 if git_clone_dir.exists():
+    print('更新 Easy Python项目中...')
     try:
         subprocess.check_call(f'cd {git_clone_dir}; git pull origin master 2>NUL || C:\\Git\\bin\\git.exe pull origin master', shell=False)
     except Exception as e:
         print(e)
 else:
+    print('获取 Easy Python项目中...')
     try:
         subprocess.check_call(['git', 'clone', git_bare_urls[0], str(git_clone_dir.resolve())], shell=False)
     except Exception as e:
@@ -74,12 +79,10 @@ else:
             print(e)
         # subprocess.check_call(['C:\\git\\bin\\git.exe', 'clone', git_bare_urls[1], git_clone_dir], shell=False)
 
-subprocess.check_call('git config --global user.name \"learner\" 2>NUL || C:\\Git\\bin\\git.exe config --global user.name \"learner\"', shell=True)
-subprocess.check_call('git config --global user.email \"learner@none.com\" 2>NUL || C:\\Git\\bin\\git.exe config --global user.email \"learner@none.com\"', shell=True)
-
 time.sleep(2)
 
 subprocess.call(str(git_clone_dir / 'MkDesktopLnk.vbs'), shell=True, cwd=str(git_clone_dir))
+trust_notebook()
 
 need_set_default = True
 i = input('这台电脑是否有安装谷歌Chrome浏览器？是请输入yes并【回车】，不是或者不知道请输入no并【回车】\n')
