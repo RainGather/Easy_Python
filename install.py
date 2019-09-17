@@ -101,6 +101,5 @@ if need_set_default:
     print('请在接下来打开的设置页面中，选择Chrome为默认浏览器。')
     input('按【回车】继续')
     subprocess.call('%windir%\\system32\\control.exe /name Microsoft.DefaultPrograms /page pageDefaultProgram\\pageAdvancedSettings?pszAppName=google%20chrome', shell=True)
-print('安装完成，按【回车】将自动开启教程。之后可以双击桌面的【Easy Python教程】快捷方式来进入教程。')
+print('安装完成，按【回车】关闭本窗口。双击桌面的【Easy Python教程】快捷方式来进入教程。')
 input()
-subprocess.call('jupyter notebook', shell=True, cwd=str(git_clone_dir / 'tutorial'))
