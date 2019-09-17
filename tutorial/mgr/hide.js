@@ -5,10 +5,10 @@ function hide_input() {
         if (divs[i].getAttribute("class") && divs[i].getAttribute("class").indexOf('cell text_cell') != -1 && divs[i].textContent.indexOf("# 注意！严重错误！") != -1 ) {
             divs[i].style.display = 'none'
         }
-        if (divs[i].getAttribute("class") == 'input' && (divs[i].textContent.indexOf("from mgr import") != -1 || divs[i].textContent.indexOf("%%html") != -1 || divs[i].textContent.indexOf("%%js") != -1)) { 
-            if (divs[i].textContent.indexOf("%%js") == -1) {
-                Jupyter.notebook.execute_cells([cell_i])
-            }
+        if (divs[i].getAttribute("class") == 'input' && divs[i].textContent.indexOf("%%html") != -1 || divs[i].textContent.indexOf("%%js") != -1) { 
+            // if (divs[i].textContent.indexOf("%%js") == -1) {
+            //     Jupyter.notebook.execute_cells([cell_i])
+            // }
             divs[i].style.display = 'none'
         }
         if (divs[i].getAttribute("class") && (divs[i].getAttribute("class").indexOf('cell text_cell') != -1 || divs[i].getAttribute("class").indexOf('cell code_cell') != -1)) {
