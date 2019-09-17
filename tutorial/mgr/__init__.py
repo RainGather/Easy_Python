@@ -95,6 +95,9 @@ class Mgr:
             print('未登陆！请点击右侧“登陆账户”按钮登陆！')
             return False
         code = code.strip().replace('\r', '')
+        # code = code.replace('\\', '\\\\').replace('\n', '\\n').replace('\t', '\\t').replace('\r', '')
+        # with open('temp_run.py', 'w', encoding='utf-8') as fw:
+        #     fw.write(code)
         index = filename.split('-')[0]
         api = f'{self.HOST}/submit'
         ipts = self.get(index)

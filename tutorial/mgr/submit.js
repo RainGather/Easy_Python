@@ -134,7 +134,7 @@ function login() {
 function sub() {
     var code = get_source_code()
     // alert(typeof(code))
-    var code = code.replace(/\"\"\"/g, "\\\"\\\"\\\"")
+    var code = code.replace(/\"\"\"/g, "\\\"\\\"\\\"").replace(/\\/g, "\\\\")
     var filename = get_filename()
     var sub_code = "import mgr\nmgr.substr(\"\"\"" + filename + "\"\"\", \"\"\"" + code + "\"\"\")"
     var callback = {
