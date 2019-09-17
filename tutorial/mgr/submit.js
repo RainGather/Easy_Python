@@ -142,6 +142,7 @@ function sub() {
             output: output_,
         }
     }
+    IPython.notebook.save_notebook()
     IPython.notebook.kernel.execute(sub_code, callback)
 }
 
