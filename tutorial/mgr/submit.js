@@ -160,3 +160,18 @@ function run_cell() {
     }
     return false
 }
+
+function jump(out_data) {
+    var output = out_data.content.text.trim()
+    window.open(output)
+}
+
+function next_page(i) {
+    next_code = "import pathlib\npj = pathlib.Path('.')\nps = []\nfor p in pj.glob('*-*.ipynb'):\n ps.append(p.name)\nps.sort()\ni = ps.index('" + get_filename()  + ".ipynb')\nprint(ps[i + " + i + "])"
+    var callback = {
+            iopub : {
+                output : jump,
+        }
+    }
+    IPython.notebook.kernel.execute(next_code, callback)
+}
