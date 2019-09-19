@@ -112,7 +112,7 @@ class Mgr:
             if err:
                 print(err.decode('utf-8').strip())
                 return False
-            output = out.decode('utf-8').strip()
+            output = out.decode('utf-8').strip().replace('\r', '')
             if output == quiz['ans']:
                 outputs[quiz_dir_name] = output
             else:
