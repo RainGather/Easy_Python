@@ -3,7 +3,7 @@
 %1 mshta vbscript:CreateObject("Shell.Application").ShellExecute("cmd.exe","/c %~s0 ::","","runas",1)(window.close)&&exit
 cd %~dp0
 
-python --version 2>NUL && pip --version 2>NUL && goto PIP || echo 你的电脑看起来没有安装过Python(或未将Python和Script放入PATH变量)...接下去将指引你安装Python
+C:\python3\python.exe --version 2>NUL && C:\python3\Scripts\pip.exe --version 2>NUL && goto PIP || echo C:\python3\python.exe不存在...接下去将指引你安装Python
 
 for /r %%f in (python-3*.exe) do (
     call set file="%%f"
@@ -26,21 +26,21 @@ echo Python3安装成功。
 
 :PIP
 echo 安装依赖模块中，请稍后...
-pip install jupyter wget gitpython requests jupyterlab -i https://pypi.douban.com/simple
+C:\python3\Scripts\pip.exe install jupyter wget gitpython requests jupyterlab -i https://pypi.douban.com/simple
 mkdir install
 cd install
 if exist install.py (
     del install.py
 )
-python -m wget "http://static.hzasteam.org/Easy_Python_Client/install.py" -o install.py
+C:\python3\python.exe -m wget "http://static.hzasteam.org/Easy_Python_Client/install.py" -o install.py
 if not exist install.py (
-    python -m wget "https://raw.githubusercontent.com/RainGather/Easy_Python/master/install.py" -o install.py
+    C:\python3\python.exe -m wget "https://raw.githubusercontent.com/RainGather/Easy_Python/master/install.py" -o install.py
 )
-python -m wget "http://static.hzasteam.org/Easy_Python_Client/start.py" -o start.py
+C:\python3\python.exe -m wget "http://static.hzasteam.org/Easy_Python_Client/start.py" -o start.py
 if not exist start.py (
-    python -m wget "https://raw.githubusercontent.com/RainGather/Easy_Python/master/start.py" -o start.py
+    C:\python3\python.exe -m wget "https://raw.githubusercontent.com/RainGather/Easy_Python/master/start.py" -o start.py
 )
-python install.py
+C:\python3\python.exe install.py
 
 echo 已完成全部安装过程，其中可能会因为网络等原因导致失败，如果还无法正常使用本项目，请重新运行本程序安装，按【任意键】退出。
 pause
