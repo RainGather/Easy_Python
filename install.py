@@ -24,7 +24,7 @@ install_git_bat_download_urls = [
 ]
 
 git_bare_urls = [
-    'https://gitee.com/starfork/Easy_Python_Client.git', 
+    'https://gitee.com/easypython/Easy_Python_Client.git', 
     # 'https://github.com/RainGather/Easy_Python.git'
 ]
 

@@ -106,7 +106,7 @@ class Mgr:
             return False
         outputs = {}
         for quiz_dir_name, quiz in ipts.items():
-            ipt = quiz['ipt'].strip()
+            ipt = quiz['ipt'].strip().replace('\r', '')
             p = subprocess.Popen(['python', '-c', code], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             out, err = p.communicate(input=ipt.encode('utf-8'))
             if err:
