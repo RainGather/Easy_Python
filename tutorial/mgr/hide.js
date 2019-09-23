@@ -2,7 +2,7 @@ function hide_input() {
     var cell_i = 0
     var divs = document.getElementsByTagName("div")
     for (var i = 0; i < divs.length; i++) {
-        if (divs[i].getAttribute("class") && divs[i].getAttribute("class").indexOf('cell text_cell') != -1 && divs[i].textContent.indexOf("# 注意！严重错误！") != -1) {
+        if (divs[i].getAttribute("class") && divs[i].getAttribute("class").indexOf('cell text_cell') != -1 && divs[i].textContent.indexOf("# 注意！请根据提示操作！") != -1) {
             divs[i].style.display = 'none'
         }
         if (divs[i].getAttribute("class") == 'input' && divs[i].textContent.indexOf("%%html") != -1 || divs[i].textContent.indexOf("%%js") != -1) {
