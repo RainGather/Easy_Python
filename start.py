@@ -17,7 +17,7 @@ def trust_notebook():
             trust_list = json.load(fr)['trust_list']
     else:
         trust_list = []
-    for p in tutorial_dir.glob('**/*.ipynb'):
+    for p in tutorial_dir.glob('*.ipynb'):
         if p.name not in trust_list:
             subprocess.call(f'jupyter trust {p}', shell=True)
             trust_list.append(p.name)
