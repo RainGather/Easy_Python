@@ -37,12 +37,12 @@ def history_save():
 
 
 def git_update():
-    # history_save()
+    history_save()
     git_cmd = 'C:\\Git\\bin\\git.exe'
     if not pathlib.Path(git_cmd).exists():
         git_cmd = 'git'
-    # subprocess.check_output([git_cmd, '-C', str(pro_dir.resolve()), 'checkout', '.'])
-    # subprocess.check_output([git_cmd, '-C', str(pro_dir.resolve()), 'pull', 'origin', 'master'])
+    subprocess.check_output([git_cmd, '-C', str(pro_dir.resolve()), 'checkout', '.'])
+    subprocess.check_output([git_cmd, '-C', str(pro_dir.resolve()), 'pull', 'origin', 'master'])
     for p in history_save_dir.glob('**/*'):
         if p.is_dir(): 
             try:
