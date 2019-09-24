@@ -110,7 +110,8 @@ class Mgr:
             p = subprocess.Popen(['python', '-c', code], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             out, err = p.communicate(input=ipt.encode('utf-8'))
             if err:
-                print(err.decode('utf-8').strip())
+                err = err.decode('utf-8').strip()
+                self.error(index, quiz, err)
                 return False
             output = out.decode('utf-8').strip().replace('\r', '')
             if output == quiz['ans']:
@@ -188,4 +189,4 @@ change_pwd = mgr.change_pwd
 
 
 if __name__ == '__main__':
-    substr('004T2-测试_输入', """i=input();print(i) # 请修改此处代码""")
+    substr('004T2-测试_输入', """i=input();i=input();print(i) # 请修改此处代码""")
