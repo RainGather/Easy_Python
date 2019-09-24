@@ -50,7 +50,7 @@ def git_update():
         if cmp_p.exists() and filecmp.cmp(p, cmp_p):
             os.remove(p)
     for p in history_save_dir.glob('**/*'):
-        if p.is_dir() and p.root != '历史保存':
+        if p.is_dir() and p.name != '历史保存':
             try:
                 os.removedirs(p)
             except Exception as e:
