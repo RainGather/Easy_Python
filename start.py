@@ -44,8 +44,8 @@ def git_update():
     subprocess.check_output([git_cmd, '-C', str(pro_dir.resolve()), 'checkout', '.'])
     subprocess.check_output([git_cmd, '-C', str(pro_dir.resolve()), 'pull', 'origin', 'master'])
     for p in history_save_dir.glob('**/*'):
-        cmp_p = tutorial_dir / p.relative_to(history_save_dir)
-        if cmp_p.exists() and p.stat().st_size == cmp_p.stat().st_size:
+        cmp_p = tutorial_dir / pathlib.Path(*p.relative_to(history_save_dir).parts[2:])
+        if cmp_p.exists() and filecmp.cmp(p, cmp_p):
             shutil.rmtree(p)
 
 
