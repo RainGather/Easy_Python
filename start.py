@@ -1,5 +1,5 @@
 import json
-import shutil
+import os
 import filecmp
 import pathlib
 import datetime
@@ -45,12 +45,9 @@ def git_update():
     # subprocess.check_output([git_cmd, '-C', str(pro_dir.resolve()), 'pull', 'origin', 'master'])
     for p in history_save_dir.glob('**/*'):
         if p.is_dir(): continue
-        cmp_p = p.relative_to(history_save_dir)
-        cmp_p = cmp_p.parts[1:]
-        cmp_p = pathlib.Path(*cmp_p)
-        cmp_p = tutorial_dir / cmp_p
+        cmp_p = tutorial_dir / pathlib.Path(*p.relative_to(history_save_dir).parts[1:])
         if cmp_p.exists() and filecmp.cmp(p, cmp_p):
-            shutil.rmtree(p)
+            os.remove(p)
 
 
 if __name__ == '__main__':
