@@ -37,15 +37,18 @@ def history_save():
 
 
 def git_update():
-    history_save()
+    # history_save()
     git_cmd = 'C:\\Git\\bin\\git.exe'
     if not pathlib.Path(git_cmd).exists():
         git_cmd = 'git'
-    subprocess.check_output([git_cmd, '-C', str(pro_dir.resolve()), 'checkout', '.'])
-    subprocess.check_output([git_cmd, '-C', str(pro_dir.resolve()), 'pull', 'origin', 'master'])
+    # subprocess.check_output([git_cmd, '-C', str(pro_dir.resolve()), 'checkout', '.'])
+    # subprocess.check_output([git_cmd, '-C', str(pro_dir.resolve()), 'pull', 'origin', 'master'])
     for p in history_save_dir.glob('**/*'):
         if p.is_dir(): continue
-        cmp_p = tutorial_dir / pathlib.Path(*p.relative_to(history_save_dir).parts[1:])
+        cmp_p = p.relative_to(history_save_dir)
+        cmp_p = cmp_p.parts[1:]
+        cmp_p = pathlib.Path(*cmp_p)
+        cmp_p = tutorial_dir / cmp_p
         if cmp_p.exists() and filecmp.cmp(p, cmp_p):
             shutil.rmtree(p)
 
