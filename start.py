@@ -36,12 +36,13 @@ def history_save():
 
 def git_update():
     history_save()
-    subprocess.check_output(f'cd {pro_dir}; git checkout .', shell=True)
-    subprocess.check_output(f'cd {pro_dir}; git pull origin master', shell=True)
+    subprocess.check_output(f'{pro_dir.drive}: & cd {pro_dir} & git checkout .', shell=True)
+    subprocess.check_output(f'{pro_dir.drive}: & cd {pro_dir} & git pull origin master', shell=True)
 
 
 if __name__ == '__main__':
+    print('系统更新中...')
     git_update()
     trust_notebook()
     print('系统启动中...')
-    subprocess.call(f'cd {pro_dir};jupyter-notebook', shell=True)
+    subprocess.call(f'{pro_dir.drive}: & cd {pro_dir} & jupyter-notebook', shell=True)
