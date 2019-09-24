@@ -36,8 +36,11 @@ def history_save():
 
 def git_update():
     history_save()
-    subprocess.check_output(f'{pro_dir.drive}: & cd {pro_dir} & git checkout .', shell=True)
-    subprocess.check_output(f'{pro_dir.drive}: & cd {pro_dir} & git pull origin master', shell=True)
+    git_cmd = 'C:\\Git\\bin\\git.exe'
+    if not pathlib.Path(git_cmd).exists():
+        git_cmd = 'git'
+    subprocess.check_output([git_cmd, '-C', str(pro_dir.resolve()), 'checkout', '.'])
+    subprocess.check_output([git_cmd, '-C', str(pro_dir.resolve()), 'pull', 'origin', 'master'])
 
 
 if __name__ == '__main__':
@@ -45,4 +48,4 @@ if __name__ == '__main__':
     git_update()
     trust_notebook()
     print('系统启动中...')
-    subprocess.call(f'{pro_dir.drive}: & cd {pro_dir} & jupyter-notebook', shell=True)
+    subprocess.call(['jupyter-notebook', '--notebook-dir', str(tutorial_dir.resolve())])
