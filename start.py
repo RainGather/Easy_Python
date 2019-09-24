@@ -50,8 +50,12 @@ def git_update():
 
 
 if __name__ == '__main__':
-    print('系统更新中...')
-    git_update()
-    trust_notebook()
-    print('系统启动中...')
-    subprocess.call(['jupyter-notebook', '--notebook-dir', str(tutorial_dir.resolve())])
+    try:
+        print('系统更新中...')
+        git_update()
+        trust_notebook()
+        print('系统启动中...')
+        subprocess.call(['jupyter-notebook', '--notebook-dir', str(tutorial_dir.resolve())])
+    except Exception as e:
+        print(e)
+        print('系统错误，请查看网络是否正常，系统时间是否正常，如一切正常请关闭打开重试。')
