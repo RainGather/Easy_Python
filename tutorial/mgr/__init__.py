@@ -6,6 +6,7 @@ import json
 import pathlib
 import hashlib
 import requests
+import platform
 import subprocess
 
 from io import StringIO
@@ -108,12 +109,13 @@ class Mgr:
         for quiz_dir_name, quiz in ipts.items():
             ipt = quiz['ipt'].strip().replace('\r', '')
             p = subprocess.Popen(['python', '-c', code], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            out, err = p.communicate(input=ipt.encode('utf-8'))
+            shell_encoding = 'gbk' if 'windows' in platform.system().lower() else 'utf-8'
+            out, err = p.communicate(input=ipt.encode(shell_encoding))
             if err:
-                err = err.decode('utf-8').strip()
+                err = err.decode(shell_encoding).strip()
                 self.error(index, quiz, err)
                 return False
-            output = out.decode('utf-8').strip().replace('\r', '')
+            output = out.decode(shell_encoding).strip().replace('\r', '')
             if output == quiz['ans']:
                 outputs[quiz_dir_name] = output
             else:
