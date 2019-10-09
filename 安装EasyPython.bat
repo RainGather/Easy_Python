@@ -110,9 +110,9 @@ if not exist "%gitexe%" (
 :JUMPGITINSTALL
 
 if not exist "%lib%\start.bat" (
-    "%gitexe%" clone https://gitee.com/easypython/Easy_Python_Client.git "%lib%" || git clone https://gitee.com/easypython/Easy_Python_Client.git "%lib%"
+    "%gitexe%" clone https://gitee.com/easypython/Easy_Python_Client.git "%lib%" 2>NUL || git clone https://gitee.com/easypython/Easy_Python_Client.git "%lib%"
 ) else (
-    "%gitexe%" -C "%lib%" pull origin master || git -C "%lib%" pull origin master
+    "%gitexe%" -C "%lib%" pull origin master 2>NUL || git -C "%lib%" pull origin master
 )
 if exist "%lib%\start.bat" (
     (
@@ -128,7 +128,6 @@ if exist "%lib%\start.bat" (
         echo oShellLink.Save
     ) > mklink.vbs
     cscript mklink.vbs
-    pause
     del mklink.vbs
 
     echo 安装成功！
