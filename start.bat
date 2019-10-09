@@ -1,3 +1,3 @@
 @echo off
 
-python %~dp0\start.py
+python "%~dp0\start.py"

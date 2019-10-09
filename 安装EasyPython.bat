@@ -132,7 +132,7 @@ if exist "%lib%\start.bat" (
 
     echo 安装成功！
     echo 强力推荐安装Chrome浏览器并设为默认，否则可能无法保证100%兼容，尤其IE浏览器完全无法正常运行本系统。
-    echo 按下【回车】将自动安装Chrome浏览器，如不需要，点击右上角关闭本窗口后，双击桌面的EasyPython教程即可使用教程。
+    echo 按下【回车】将自动安装Chrome浏览器，如不需要，点击右上角关闭本窗口后，双击桌面的【EasyPython教程】即可使用教程。
     pause
     echo 下载Chrome中，请稍后...
     if not exist "%install%\chrome-install.exe" (

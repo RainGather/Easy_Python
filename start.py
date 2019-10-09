@@ -42,6 +42,7 @@ def history_save():
 
 def git_update():
     history_save()
+    git_cmd = str(git_exe.resolve())
     if not pathlib.Path(git_cmd).exists():
         print('未找到随带Git，使用系统自带Git，如出现问题建议卸载Git和Python后重新安装本系统。')
         git_cmd = 'git'
