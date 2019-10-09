@@ -19,22 +19,22 @@ mkdir "%install%"
 if not exist "%pyexe%" (
     if not exist "%install%\pyinstall.exe" (
         echo 下载Python3中，请稍后...
-
-        echo Sub Download(link, filename) > download.vbs
-        echo     Set Post = CreateObject("Msxml2.XMLHTTP") >> download.vbs
-        echo     Set Shell = CreateObject("Wscript.Shell") >> download.vbs
-        echo     Post.Open "GET",link,0 >> download.vbs
-        echo     Post.Send() >> download.vbs
-        echo     Set aGet = CreateObject("ADODB.Stream") >> download.vbs
-        echo     aGet.Mode = 3 >> download.vbs
-        echo     aGet.Type = 1 >> download.vbs
-        echo     aGet.Open() >> download.vbs
-        echo     aGet.Write(Post.responseBody) >> download.vbs
-        echo     aGet.SaveToFile filename,2 >> download.vbs
-        echo     wscript.sleep 1000 >> download.vbs
-        echo End Sub >> download.vbs
-        echo Download "https://npm.taobao.org/mirrors/python/3.6.6/python-3.6.6.exe" "%install%\pyinstall.exe" >> download.vbs
-
+        (
+            echo Sub Download(link, filename)
+            echo     Set Post = CreateObject("Msxml2.XMLHTTP")
+            echo     Set Shell = CreateObject("Wscript.Shell")
+            echo     Post.Open "GET",link,0
+            echo     Post.Send()
+            echo     Set aGet = CreateObject("ADODB.Stream")
+            echo     aGet.Mode = 3
+            echo     aGet.Type = 1
+            echo     aGet.Open()
+            echo     aGet.Write(Post.responseBody)
+            echo     aGet.SaveToFile filename,2
+            echo     wscript.sleep 1000
+            echo End Sub
+            echo Download "https://npm.taobao.org/mirrors/python/3.6.6/python-3.6.6.exe" "%install%\pyinstall.exe"
+        ) > download.vbs
         cscript download.vbs
         del download.vbs
     )
@@ -114,23 +114,24 @@ if not exist "%lib%\start.bat" (
     "%gitexe%" pull origin master -C "%lib%"
 )
 if exist "%lib%\start.bat" (
-
-    echo Sub MkDesktopLink(linkname, linkaddr, icon, description) > mklink.vbs
-    echo     set WshShell=WScript.CreateObject("WScript.Shell") >> mklink.vbs
-    echo     strDesktop=WshShell.SpecialFolders("Desktop") >> mklink.vbs
-    echo     set oShellLink=WshShell.CreateShortcut(strDesktop & "\\" & linkname) >> mklink.vbs
-    echo     oShellLink.TargetPath=linkaddr >> mklink.vbs
-    echo     oShellLink.WindowStyle=1 >> mklink.vbs
-    echo     oShellLink.Hotkey="" >> mklink.vbs
-    echo     oShellLink.IconLocation=icon >> mklink.vbs
-    echo     oShellLink.Description=description >> mklink.vbs
-    echo     oShellLink.WorkingDirectory=strDesktop >> mklink.vbs
-    echo     oShellLink.Save >> mklink.vbs
-    echo End Sub >> mklink.vbs
-    echo MkDesktopLink "EasyPython教程.lnk" "%lib%" & "\\windows\\start.bat" "%lib%" & "\\logo.ico" "打开EasyPython开始学习" >> mklink.vbs
-
+    (
+        echo Sub MkDesktopLink(linkname, linkaddr, icon, description)
+        echo     set WshShell=WScript.CreateObject("WScript.Shell")
+        echo     strDesktop=WshShell.SpecialFolders("Desktop")
+        echo     set oShellLink=WshShell.CreateShortcut(strDesktop & "\\" & linkname)
+        echo     oShellLink.TargetPath=linkaddr
+        echo     oShellLink.WindowStyle=1
+        echo     oShellLink.Hotkey=""
+        echo     oShellLink.IconLocation=icon
+        echo     oShellLink.Description=description
+        echo     oShellLink.WorkingDirectory=strDesktop
+        echo     oShellLink.Save
+        echo End Sub
+        echo MkDesktopLink "EasyPython教程.lnk" "%lib%" & "\\windows\\start.bat" "%lib%" & "\\logo.ico" "打开EasyPython开始学习"
+    ) > mklink.vbs
     cscript mklink.vbs
     del mklink.vbs
+
     echo 安装成功！
     echo 如遇到系统问题，可以将%pro%完全删除后重新去官网下载安装。
     echo 强力推荐安装Chrome浏览器并设为默认，否则可能无法保证100%兼容，尤其IE浏览器完全无法正常运行本系统。
