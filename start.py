@@ -7,10 +7,12 @@ import datetime
 import subprocess
 
 
-pro_dir = pathlib.Path(__file__).parent
-tutorial_dir = pro_dir / 'tutorial'
+easy_python_client_dir = pathlib.Path(__file__).parent.absolute()
+pro_dir = pathlib.Path(__file__).parent.parent.absolute()
+tutorial_dir = easy_python_client_dir / 'tutorial'
 history_save_dir = tutorial_dir / '历史保存'
-trust_list_path = pro_dir / 'trust_list.json'
+trust_list_path = easy_python_client_dir / 'trust_list.json'
+git_exe = pro_dir / 'git' / 'bin' / 'git.exe'
 now = datetime.datetime.now()
 
 
@@ -39,11 +41,10 @@ def history_save():
 
 def git_update():
     history_save()
-    git_cmd = 'C:\\Git\\bin\\git.exe'
     if not pathlib.Path(git_cmd).exists():
         git_cmd = 'git'
-    subprocess.check_output([git_cmd, '-C', str(pro_dir.resolve()), 'checkout', '.'])
-    subprocess.check_output([git_cmd, '-C', str(pro_dir.resolve()), 'pull', 'origin', 'master'])
+    subprocess.check_output([git_cmd, '-C', str(easy_python_client_dir.resolve()), 'checkout', '.'])
+    subprocess.check_output([git_cmd, '-C', str(easy_python_client_dir.resolve()), 'pull', 'origin', 'master'])
     for p in history_save_dir.glob('**/*'):
         if p.is_dir(): continue
         cmp_p = tutorial_dir / pathlib.Path(*p.relative_to(history_save_dir).parts[1:])
