@@ -22,11 +22,11 @@ mkdir "%pro%" 2>NUL
 mkdir "%install%" 2>NUL
 
 if not exist "%pipexe%" (
-    python --version 2>NUL && echo 检测到你已安装Python，但系统仍会安装一个特定版本的Python3 && echo 这并不会覆盖你原有的环境，但是会将新版本的Python作为默认Python && echo 如需切换为原先的Python，请修改PATH，具体方法网上查找 && echo 如果你不明白上述语句的含义，就不用管这些提示，继续安装即可。
     if not exist "%install%\pyinstall.exe" (
         echo 下载Python3中，请稍后...
         bitsadmin /transfer "下载Python3中，请稍后..." "https://npm.taobao.org/mirrors/python/3.6.6/python-3.6.6.exe" "%install%\pyinstall.exe"
     )
+    python --version 2>NUL && echo 检测到你已安装Python，但系统仍会安装一个特定版本的Python3 && echo 这并不会覆盖你原有的环境，但是会将新版本的Python作为默认Python && echo 如需切换为原先的Python，请修改PATH，具体方法网上查找 && echo 如果你不明白上述语句的含义，就不用管这些提示，继续安装即可。 && echo ====================================
     echo 尝试安装Python3中，可能需要15分钟。
     echo 期间窗口不会有任何变化，请勿中途关闭窗口，否则会导致安装失败！
     echo 请稍后...
