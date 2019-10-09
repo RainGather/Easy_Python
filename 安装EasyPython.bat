@@ -13,34 +13,31 @@ set gitdir=%pro%\git
 set gitexe=%gitdir%\bin\git.exe
 %pro:0,2%
 cd "%~dp0"
-mkdir "%pro%"
-mkdir "%install%"
+mkdir "%pro%" 2>NUL
+mkdir "%install%" 2>NUL
 
 if not exist "%pyexe%" (
     if not exist "%install%\pyinstall.exe" (
         echo 下载Python3中，请稍后...
         (
-            echo Sub Download(link, filename)
-            echo     Set Post = CreateObject("Msxml2.XMLHTTP")
-            echo     Set Shell = CreateObject("Wscript.Shell")
-            echo     Post.Open "GET",link,0
-            echo     Post.Send()
-            echo     Set aGet = CreateObject("ADODB.Stream")
-            echo     aGet.Mode = 3
-            echo     aGet.Type = 1
-            echo     aGet.Open()
-            echo     aGet.Write(Post.responseBody)
-            echo     aGet.SaveToFile filename,2
-            echo     wscript.sleep 1000
-            echo End Sub
-            echo Download "https://npm.taobao.org/mirrors/python/3.6.6/python-3.6.6.exe" "%install%\pyinstall.exe"
+            echo Set Post = CreateObject("Msxml2.XMLHTTP"^)
+            echo Set Shell = CreateObject("Wscript.Shell"^)
+            echo Post.Open "GET","https://npm.taobao.org/mirrors/python/3.6.6/python-3.6.6.exe",0
+            echo Post.Send(^)
+            echo Set aGet = CreateObject("ADODB.Stream"^)
+            echo aGet.Mode = 3
+            echo aGet.Type = 1
+            echo aGet.Open(^)
+            echo aGet.Write(Post.responseBody^)
+            echo aGet.SaveToFile "%install%\pyinstall.exe",2
+            echo wscript.sleep 1000
         ) > download.vbs
         cscript download.vbs
         del download.vbs
     )
     echo 尝试安装Python3中，可能需要15分钟，请稍后...
     "%install%\pyinstall.exe" /quiet InstallAllUsers=1 PrependPath=1 Shortcuts=1 Include_pip=1 TargetDir="%pydir%"
-    if exist "%pyexe%" && exist "%pipexe%" (
+    if exist "%pipexe%" (
         echo Python3安装成功。
     ) else (
         echo Python3安装失败，请重试！
@@ -115,19 +112,16 @@ if not exist "%lib%\start.bat" (
 )
 if exist "%lib%\start.bat" (
     (
-        echo Sub MkDesktopLink(linkname, linkaddr, icon, description)
-        echo     set WshShell=WScript.CreateObject("WScript.Shell")
-        echo     strDesktop=WshShell.SpecialFolders("Desktop")
-        echo     set oShellLink=WshShell.CreateShortcut(strDesktop & "\\" & linkname)
-        echo     oShellLink.TargetPath=linkaddr
-        echo     oShellLink.WindowStyle=1
-        echo     oShellLink.Hotkey=""
-        echo     oShellLink.IconLocation=icon
-        echo     oShellLink.Description=description
-        echo     oShellLink.WorkingDirectory=strDesktop
-        echo     oShellLink.Save
-        echo End Sub
-        echo MkDesktopLink "EasyPython教程.lnk" "%lib%" & "\\windows\\start.bat" "%lib%" & "\\logo.ico" "打开EasyPython开始学习"
+        echo set WshShell=WScript.CreateObject("WScript.Shell")
+        echo strDesktop=WshShell.SpecialFolders("Desktop")
+        echo set oShellLink=WshShell.CreateShortcut(strDesktop & "\EasyPython教程.lnk")
+        echo oShellLink.TargetPath="%lib%\windows\start.bat"
+        echo oShellLink.WindowStyle=1
+        echo oShellLink.Hotkey=""
+        echo oShellLink.IconLocation="%lib%\logo.ico"
+        echo oShellLink.Description="打开EasyPython开始学习"
+        echo oShellLink.WorkingDirectory=strDesktop
+        echo oShellLink.Save
     ) > mklink.vbs
     cscript mklink.vbs
     del mklink.vbs
