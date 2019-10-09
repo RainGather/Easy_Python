@@ -13,7 +13,8 @@ tutorial_dir = easy_python_client_dir / 'tutorial'
 history_save_dir = tutorial_dir / '历史保存'
 trust_list_path = easy_python_client_dir / 'trust_list.json'
 git_exe = pro_dir / 'git' / 'bin' / 'git.exe'
-jupyter_exe = pro_dir / 'python' / 'Scripts' / 'jupyter-notebook.exe'
+jupyter_notebook_exe = pro_dir / 'python' / 'Scripts' / 'jupyter-notebook.exe'
+jupyter_exe = pro_dir / 'python' / 'Scripts' / 'jupyter.exe'
 now = datetime.datetime.now()
 
 
@@ -67,7 +68,7 @@ if __name__ == '__main__':
         git_update()
         trust_notebook()
         print('系统启动中...')
-        subprocess.call([str(jupyter_exe.resolve()), '--notebook-dir', str(tutorial_dir.resolve())])
+        subprocess.call([str(jupyter_notebook_exe.resolve()), '--notebook-dir', str(tutorial_dir.resolve())])
     except Exception as e:
         print(e)
         print('系统错误，请查看网络是否正常，系统时间是否正常，如一切正常请关闭打开重试。')
