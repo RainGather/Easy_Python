@@ -13,8 +13,20 @@ tutorial_dir = easy_python_client_dir / 'tutorial'
 history_save_dir = tutorial_dir / '历史保存'
 trust_list_path = easy_python_client_dir / 'trust_list.json'
 git_exe = pro_dir / 'git' / 'bin' / 'git.exe'
+if not git_exe.exists():
+    git_exe = 'git'
+else:
+    git_exe = str(git_exe.resolve())
 jupyter_notebook_exe = pro_dir / 'python' / 'Scripts' / 'jupyter-notebook.exe'
+if not jupyter_notebook_exe.exists():
+    jupyter_notebook_exe = 'jupyter-notebook'
+else:
+    jupyter_notebook_exe = str(jupyter_notebook_exe.resolve())
 jupyter_exe = pro_dir / 'python' / 'Scripts' / 'jupyter.exe'
+if not jupyter_exe.exists():
+    jupyter_exe = 'jupyter'
+else:
+    jupyter_exe = str(jupyter_exe.resolve())
 now = datetime.datetime.now()
 
 
@@ -26,7 +38,7 @@ def trust_notebook():
         trust_list = []
     for p in tutorial_dir.glob('*.ipynb'):
         if p.name not in trust_list:
-            subprocess.call([str(jupyter_exe.resolve()), 'trust', str(p.resolve())])
+            subprocess.call([jupyter_exe, 'trust', str(p.resolve())])
             trust_list.append(p.name)
             with trust_list_path.open('w', encoding='utf-8') as fw:
                 json.dump({'trust_list': trust_list}, fw)
@@ -43,12 +55,8 @@ def history_save():
 
 def git_update():
     history_save()
-    git_cmd = str(git_exe.resolve())
-    if not pathlib.Path(git_cmd).exists():
-        print('未找到随带Git，使用系统自带Git，如出现问题建议卸载Git和Python后重新安装本系统。')
-        git_cmd = 'git'
-    subprocess.check_output([git_cmd, '-C', str(easy_python_client_dir.resolve()), 'checkout', '.'])
-    subprocess.check_output([git_cmd, '-C', str(easy_python_client_dir.resolve()), 'pull', 'origin', 'master'])
+    subprocess.check_output([git_exe, '-C', str(easy_python_client_dir.resolve()), 'checkout', '.'])
+    subprocess.check_output([git_exe, '-C', str(easy_python_client_dir.resolve()), 'pull', 'origin', 'master'])
     for p in history_save_dir.glob('**/*'):
         if p.is_dir(): continue
         cmp_p = tutorial_dir / pathlib.Path(*p.relative_to(history_save_dir).parts[1:])
@@ -68,7 +76,7 @@ if __name__ == '__main__':
         git_update()
         trust_notebook()
         print('系统启动中...')
-        subprocess.call([str(jupyter_notebook_exe.resolve()), '--notebook-dir', str(tutorial_dir.resolve())])
+        subprocess.call([jupyter_notebook_exe, '--notebook-dir', str(tutorial_dir.resolve())])
     except Exception as e:
         print(e)
         print('系统错误，请查看网络是否正常，系统时间是否正常，如一切正常请关闭打开重试。')

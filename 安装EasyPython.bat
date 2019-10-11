@@ -10,7 +10,7 @@ set pipexe=%pydir%\Scripts\pip.exe
 set downloadvbs=%install%\download.vbs
 set mklinkvbs=%install%\mklink.vbs
 set gitdir=%pro%\git
-set gitexe=%gitdir%\bin\git.exe
+git --version 2>NUL && set gitexe=git || set gitexe=%gitdir%\bin\git.exe
 %pro:~0,2%
 cd "%~dp0"
 
@@ -21,35 +21,40 @@ echo ==============================================
 mkdir "%pro%" 2>NUL
 mkdir "%install%" 2>NUL
 
-if not exist "%pipexe%" (
-    if not exist "%install%\pyinstall.exe" (
-        echo 下载Python3中，请稍后...
-        bitsadmin /transfer "下载Python3中，请稍后..." "https://npm.taobao.org/mirrors/python/3.6.6/python-3.6.6.exe" "%install%\pyinstall.exe"
-    )
-    python --version 2>NUL && echo 检测到你已安装Python，但系统仍会安装一个特定版本的Python3 && echo 这并不会覆盖你原有的环境，但是会将新版本的Python作为默认Python && echo 如需切换为原先的Python，请修改PATH，具体方法网上查找 && echo 如果你不明白上述语句的含义，就不用管这些提示，继续安装即可。 && echo ====================================
-    echo 尝试安装Python3中，可能需要15分钟。
-    echo 期间窗口不会有任何变化，请勿中途关闭窗口，否则会导致安装失败！
-    echo 请稍后...
-    echo ==============================================
-    "%install%\pyinstall.exe" /quiet InstallAllUsers=1 PrependPath=1 Shortcuts=1 Include_pip=1 TargetDir="%pydir%"
-    if exist "%pipexe%" (
-        echo Python3安装成功。
-        echo ===============================================
-    ) else (
-        echo Python3安装失败！
-        echo 请打开【控制面板】中的【程序和功能】，将Python3.6.6卸载，并删除%pro%文件夹，然后重新安装。
-        pause
-        exit
-    )
+python --version 2>NUL && goto IFPYVERSION || goto INSTALLPY
+
+:IFPYVERSION
+python -c "import sys;if sys.version_info.major != 3 or sys.version_info.minor < 6: print('python版本过低，将会自动安装较新版本。'); sys.exit(2)" && set pyexe=python && set pipexe=python -m pip && goto INSTALLPIP || goto INSTALLPY
+
+:INSTALLPY
+if not exist "%install%\pyinstall.exe" (
+    echo 下载Python3中，请稍后...
+    bitsadmin /transfer "下载Python3中，请稍后..." "https://npm.taobao.org/mirrors/python/3.6.6/python-3.6.6.exe" "%install%\pyinstall.exe"
+)
+echo 尝试安装Python3中，可能需要15分钟。
+echo 期间窗口不会有任何变化，请勿中途关闭窗口，否则会导致安装失败！
+echo 请稍后...
+echo ==============================================
+"%install%\pyinstall.exe" /quiet InstallAllUsers=1 PrependPath=1 Shortcuts=1 Include_pip=1 TargetDir="%pydir%"
+%pipexe% --version 2>NUL && (
+    echo Python3安装成功。
+    echo ===============================================
+) || (
+    echo Python3安装失败！
+    echo 请打开【控制面板】中的【程序和功能】，将所有Python卸载，并删除%pro%文件夹，然后重新安装。
+    pause
+    exit
 )
 
+:INSTALLPIP
 echo 安装依赖模块中，请稍后...
 "%pipexe%" install jupyter wget gitpython requests jupyterlab -i https://pypi.douban.com/simple --upgrade
 echo ===============================================
 
-git --version 2>NUL && goto JUMPGITINSTALL
+%gitexe% --version 2>NUL && goto GITCLONE
 
-if not exist "%gitexe%" (
+:INSTALLGIT
+(
     echo 未找到git程序，尝试安装中...
     if not exist "%install%\git-install.exe" (
         "%pyexe%" -m wget "https://npm.taobao.org/mirrors/git-for-windows/v2.23.0.windows.1/Git-2.23.0-32-bit.exe" -o "%install%\git-install.exe"
@@ -107,8 +112,7 @@ if not exist "%gitexe%" (
     "%gitexe%" config --global user.email learner@none.com
 )
 
-:JUMPGITINSTALL
-
+:GITCLONE
 if not exist "%lib%\start.bat" (
     "%gitexe%" clone https://gitee.com/easypython/Easy_Python_Client.git "%lib%" 2>NUL || git clone https://gitee.com/easypython/Easy_Python_Client.git "%lib%"
 ) else (
