@@ -11,7 +11,7 @@ set downloadvbs=%install%\download.vbs
 set mklinkvbs=%install%\mklink.vbs
 set gitdir=%pro%\git
 git --version 2>NUL && set gitexe=git || set gitexe=%gitdir%\bin\git.exe
-%pro:~0,2%
+%pro:~1,3%
 cd "%~dp0"
 
 echo 请关闭所有类似360、腾讯管家等有可能拦截系统修改的安全软件，防止系统安装出错。
