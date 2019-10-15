@@ -10,6 +10,8 @@ set pipexe=%pydir%\Scripts\pip.exe
 set downloadvbs=%install%\download.vbs
 set mklinkvbs=%install%\mklink.vbs
 set gitdir=%pro%\git
+set start_bat_path="%~dp0EasyPython\lib\start.bat"
+set logo_icon_path="%~dp0EasyPython\lib\logo.ico"
 git --version 2>NUL && set gitexe=git || set gitexe=%gitdir%\bin\git.exe
 %pro:~1,2%
 cd "%~dp0"
@@ -90,6 +92,7 @@ echo ===============================================
         @echo on
         if %errorLevel% == 1 ( echo Error opening %file%. File may be corrupt. )
         if %errorLevel% == 2 ( echo Error reading %file%. May require elevated privileges. Run as administrator. )
+        pause
         exit /b %errorlevel%
     )
     del config.inf
@@ -97,10 +100,12 @@ echo ===============================================
     net session >nul 2>&1
     if %errorLevel% == 0 (
         :: pathman /as "%PATH%;%installDir%/cmd"
+        pause
         exit 0
     ) else (
         @echo on
         echo SYSTEM PATH Environment Variable may not be set, may require elevated privileges. Run as administrator if it doesn't already exist.
+        pause
         exit /b 0
     )
     if not exist %gitexe% (
@@ -123,10 +128,10 @@ if exist %lib%\start.bat (
         echo set WshShell=WScript.CreateObject("WScript.Shell"^)
         echo strDesktop=WshShell.SpecialFolders("Desktop"^)
         echo set oShellLink=WshShell.CreateShortcut(strDesktop ^& "\EasyPython教程.lnk"^)
-        echo oShellLink.TargetPath=%lib%\start.bat
+        echo oShellLink.TargetPath=%start_bat_path%
         echo oShellLink.WindowStyle=1
         echo oShellLink.Hotkey=""
-        echo oShellLink.IconLocation=%lib%\logo.ico
+        echo oShellLink.IconLocation=%logo_icon_path%
         echo oShellLink.Description="打开EasyPython开始学习"
         echo oShellLink.WorkingDirectory=strDesktop
         echo oShellLink.Save
