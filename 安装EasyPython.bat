@@ -97,17 +97,6 @@ echo ===============================================
     )
     del config.inf
 
-    net session >nul 2>&1
-    if %errorLevel% == 0 (
-        :: pathman /as "%PATH%;%installDir%/cmd"
-        pause
-        exit 0
-    ) else (
-        @echo on
-        echo SYSTEM PATH Environment Variable may not be set, may require elevated privileges. Run as administrator if it doesn't already exist.
-        pause
-        exit /b 0
-    )
     if not exist %gitexe% (
         echo git∞≤◊∞ ß∞‹£¨«Î÷ÿ ‘£°
         pause
