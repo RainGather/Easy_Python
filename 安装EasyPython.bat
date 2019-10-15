@@ -6,7 +6,7 @@ set lib=%pro%\lib
 set install=%pro%\install
 set pydir=%pro%\python
 set pyexe=%pydir%\python.exe
-set pipexe=%pydir%\Scripts\pip.exe
+set pipexe="%pydir%\Scripts\pip.exe"
 set downloadvbs=%install%\download.vbs
 set mklinkvbs=%install%\mklink.vbs
 set gitdir=%pro%\git
@@ -48,7 +48,7 @@ echo ==============================================
 
 :INSTALLPIP
 echo 安装依赖模块中，请稍后...
-"%pipexe%" install jupyter wget gitpython requests jupyterlab -i https://pypi.douban.com/simple --upgrade
+%pipexe% install jupyter wget gitpython requests jupyterlab -i https://pypi.douban.com/simple --upgrade
 echo ===============================================
 
 %gitexe% --version 2>NUL && goto GITCLONE
