@@ -97,11 +97,7 @@ echo ===============================================
     )
     del config.inf
 
-    if not exist %gitexe% (
-        echo git安装失败，请重试！
-        pause
-        exit
-    )
+    %gitexe% --version 2>NUL || (echo git安装失败，请重试！ && pause && exit)
     %gitexe% config --global user.name learner
     %gitexe% config --global user.email learner@none.com
 )
