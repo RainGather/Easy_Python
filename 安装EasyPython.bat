@@ -24,7 +24,7 @@ mkdir "%install%" 2>NUL
 python --version 2>NUL && goto IFPYVERSION || goto INSTALLPY
 
 :IFPYVERSION
-python -c "import sys;if sys.version_info.major != 3 or sys.version_info.minor < 6: print('python版本过低，将会自动安装较新版本。'); sys.exit(2)" && set pyexe=python && set pipexe=python -m pip && goto INSTALLPIP || goto INSTALLPY
+python -c "import sys;sys.version_info.major != 3 or sys.version_info.minor < 6 and print('python版本过低，将会自动安装较新版本。') and sys.exit(2)" && set pyexe=python && set pipexe=python -m pip && goto INSTALLPIP || goto INSTALLPY
 
 :INSTALLPY
 if not exist "%install%\pyinstall.exe" (
