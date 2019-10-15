@@ -57,8 +57,9 @@ echo ===============================================
 
 :INSTALLGIT
 (
-    echo 未找到git程序，尝试安装中...
+    echo 未找到git程序
     if not exist %install%\git-install.exe (
+        echo 下载git安装程序中...
         %pyexe% -m wget "https://npm.taobao.org/mirrors/git-for-windows/v2.23.0.windows.1/Git-2.23.0-32-bit.exe" -o %install%\git-install.exe
         if not exist %install%\git-install.exe (
             echo 下载git安装程序失败，请重试...
@@ -66,12 +67,10 @@ echo ===============================================
             exit
         )
     )
-    set installDir=%gitdir%
-    set installDir=%installDir:"=%
     (
         echo [Setup]
         echo Lang=default
-        echo Dir=%installDir%
+        echo Dir=.\EasyPython\git
         echo Group=Git
         echo NoIcons=0
         echo SetupType=default
@@ -87,6 +86,7 @@ echo ===============================================
         echo EnableBuiltinDifftool=Disabled
     ) > config.inf
 
+    echo 安装git中...
     %install%\git-install.exe /VERYSILENT /LOADINF="config.inf"
     if errorlevel 1 (
         @echo on
