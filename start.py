@@ -35,7 +35,7 @@ def trust_notebook():
         with trust_list_path.open('r', encoding='utf-8') as fr:
             trust_list = json.load(fr)['trust_list']
     else:
-        trust_list = []
+        trust_list = ['000-HelloWorld.ipynb']
     for p in tutorial_dir.glob('*.ipynb'):
         if p.name not in trust_list:
             subprocess.call([jupyter_exe, 'trust', str(p.resolve())])
